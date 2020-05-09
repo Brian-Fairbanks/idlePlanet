@@ -2,7 +2,10 @@ const materials = [
   "Gold",
   "Iron",
   "Coal",
-  "Dirt"
+  "Dirt",
+  //gasses
+  "Oxygen",
+  "Hydrogen"
 ]
 
 
@@ -15,14 +18,15 @@ class Planet {
     this.size = this.getSize();
     this.polution = 0;
     this.pos={
-      x:"posx" in props? props.posx : 0,
-      y:"posy" in props? props.posy : 0
+      x:"posx" in props? props.posx : 100000*(Math.random()*2-1),
+      y:"posy" in props? props.posy : 100000*(Math.random()*2-1)
     };
-    this.speed=("speed" in props)?props.speed:Math.random();
+    this.speed=("speed" in props)?props.speed:Math.random()*50;
     this.direction = {
       x: "dirx" in props?props.dirx:Math.random()*2-1,
       y: "diry" in props?props.diry:Math.random()*2-1
-    }
+    };
+    this.distFromOrigin = Math.sqrt(this.pos.x^2 + this.pos.y^2);
   }
 
   makeComposition = function (){
@@ -49,5 +53,6 @@ class Planet {
   move = function(){
     this.pos.x += this.speed*this.direction.x;
     this.pos.y += this.speed*this.direction.y;
+    this.distFromOrigin = Math.sqrt(this.pos.x*this.pos.x + this.pos.y*this.pos.y);
   }
 }
