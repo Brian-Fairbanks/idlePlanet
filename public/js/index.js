@@ -1,12 +1,12 @@
 var planets = []
-var zoom = 101;
+var zoom = 30;
 var maxZoom = 300;
 var x = 0;
 var y = 0;
-const maxPlanets = 12;
+const maxPlanets = 20;
 const maxDistance = 100000;
 //Gravitational Constant
-const g = .0000002;
+const g = .000002;
 
 //const homePlanet = newPlanet("Home");
 planets.push(new Planet({name:"Earth", speed:0, posx:0, posy:0, dirx:0, diry:0, type:"Start"}));

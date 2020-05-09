@@ -82,7 +82,6 @@ class Planet {
   }
 
   applyGravity = function (other){
-    const g = .00002;
     const dist = this.getDistance(other);
     const dir = this.getDir(other);
 
@@ -104,8 +103,15 @@ class Planet {
   }
 
   combinePlanets = function(other){
-    let bigger = this.mass > other.mass? this:other;
-    let smaller = this.mass <= other.mass? this:other;
+    let bigger;
+    let smaller;
+    // home planet will always servive
+    if (["Start","Sun"].includes(this.type)){bigger = this; smaller = other}
+    else if (["Start","Sun"].includes(other.type)){bigger = other; smaller = this}
+    else{
+      bigger = this.mass > other.mass? this:other;
+      smaller = this.mass <= other.mass? this:other;
+    }
 
     for(const mat in smaller.materials){
       //console.log(mat,":",smaller.materials[mat])
