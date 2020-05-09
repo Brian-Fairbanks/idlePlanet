@@ -30,21 +30,7 @@ function draw(){
   ctx.fillStyle = "#000000";
   ctx.fillRect(0,0,canvas.width, canvas.height);
   for (planet of planets){
-    //console.log(`drawing ${planet.name}`);
-    ctx.fillStyle = "#00FF00";
-    let planetScale = planet.size/zoom;
-    //let posx = (canvas.width-(planetScale))/2;
-    //let posy = (canvas.height-(planetScale))/2;
-    let posx = canvas.width*.5+ planet.pos.x/zoom;
-    let posy = canvas.height*.5+ planet.pos.y/zoom;
-
-    ctx.beginPath();
-    //  x center,  y center, 
-    ctx.arc(posx, posy, planetScale, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-//    ctx.fillRect(posx, posy, planetScale, planetScale);
+    planet.draw();
   }
 }
 

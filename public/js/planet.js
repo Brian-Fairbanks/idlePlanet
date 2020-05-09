@@ -13,6 +13,7 @@ class Planet {
   constructor(props){ //props = {name, posx, posy, speed, dirx, diry}
     this.name = "name" in props? props.name : "unNamed";
     this.type = "type" in props?props.type : "Start";
+    this.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
     this.materials = {};
     this.makeComposition();
     this.size = this.getSize();
@@ -83,5 +84,21 @@ class Planet {
     this.direction.x += dir.x*(F);
     this.direction.y += dir.y*(F);
 
+  }
+
+
+  draw = function(){
+        let planetScale = planet.size/zoom;
+        //let posx = (canvas.width-(planetScale))/2;
+        //let posy = (canvas.height-(planetScale))/2;
+        let posx = canvas.width*.5+ planet.pos.x/zoom;
+        let posy = canvas.height*.5+ planet.pos.y/zoom;
+    
+        ctx.beginPath();
+        //  x center,  y center, 
+        ctx.arc(posx, posy, planetScale, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
   }
 }
