@@ -11,9 +11,9 @@ const materials = [
 
 class Planet {
   constructor(props){ //props = {name, posx, posy, speed, dirx, diry}
-  console.log(props);
     this.name = "name" in props? props.name : "unNamed";
-    this.materials = {}
+    this.type = "type" in props?props.type : "Start";
+    this.materials = {};
     this.makeComposition();
     this.size = this.getSize();
     this.polution = 0;
@@ -21,10 +21,11 @@ class Planet {
       x:"posx" in props? props.posx : 100000*(Math.random()*2-1),
       y:"posy" in props? props.posy : 100000*(Math.random()*2-1)
     };
-    this.speed=("speed" in props)?props.speed:Math.random()*50;
+    //this.speed=("speed" in props)?props.speed:Math.random()*50;
+    this.speed = 1;
     this.direction = {
-      x: "dirx" in props?props.dirx:Math.random()*2-1,
-      y: "diry" in props?props.diry:Math.random()*2-1
+      x: "dirx" in props?props.dirx:10*Math.random()*2-1,
+      y: "diry" in props?props.diry:10*Math.random()*2-1
     };
     this.distFromOrigin = Math.sqrt(this.pos.x^2 + this.pos.y^2);
   }
@@ -51,8 +52,36 @@ class Planet {
   }
 
   move = function(){
+    //if (["Start","Sun"].includes(this.type)){return;}
     this.pos.x += this.speed*this.direction.x;
     this.pos.y += this.speed*this.direction.y;
     this.distFromOrigin = Math.sqrt(this.pos.x*this.pos.x + this.pos.y*this.pos.y);
+  }
+
+
+  getDistance = function(other){
+    return Math.sqrt(Math.pow(this.pos.x-other.pos.x, 2)+Math.pow(this.pos.y-other.pos.y, 2));
+  }
+
+  getDir = function(other){
+    var angleRadians = Math.atan2(other.pos.y - this.pos.y, other.pos.x - this.pos.x);
+    return {x:Math.cos(angleRadians), y:Math.sin(angleRadians)};
+  }
+
+  applyGravity(other){
+    console.log(this.type in ["Start"]);
+
+    const g = 10;
+    const dist = this.getDistance(other);
+    const dir = this.getDir(other);
+
+    // F = g*((m1*m2)/(d*d))
+    var F = g*(this.size * planet.size )/(dist*dist);
+
+    console.log(dist, dir, F);
+
+    this.direction.x += dir.x*(F);
+    this.direction.y += dir.y*(F);
+
   }
 }

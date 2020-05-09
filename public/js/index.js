@@ -4,14 +4,14 @@ var x = 0;
 var y = 0;
 
 //const homePlanet = newPlanet("Home");
-planets.push(new Planet({name:"Earth", speed:0, posx:0, posy:0 }));
+planets.push(new Planet({name:"Earth", speed:0, posx:0, posy:0, dirx:0, diry:0, type:"Start"}));
 
 const canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-planets.push(new Planet({name:"Mars", speed:0}));
-planets.push(new Planet({name:"Jupitor", speed:0}));
-planets.push(new Planet({name:"Saturn", speed:0}));
+planets.push(new Planet({name:"Mars", type:"Planet"}));
+planets.push(new Planet({name:"Jupitor", type:"Planet"}));
+planets.push(new Planet({name:"Saturn", type:"Planet"}));
 
 
 
@@ -67,10 +67,13 @@ function update(){
 //Gravity Function
 function applyGravity(){
   //Apply Gravity
-  for (planet in planets){
-    for (other in planets){
+  for (planet of planets){
+    for (other of planets){
       if (planet != other){
-        console.log(`Applying Gravity on ${planet} -> ${other}`);
+        console.log(`Applying Gravity on ${planet.name} -> ${other.name}`);
+        planet.applyGravity(other);
+        // G = g*((m1*m2)/(d*d))
+
       }
     }
   }
