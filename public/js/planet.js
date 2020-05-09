@@ -69,22 +69,52 @@ class Planet {
     return {x:Math.cos(angleRadians), y:Math.sin(angleRadians)};
   }
 
-  applyGravity(other){
-    console.log(this.type in ["Start"]);
-
-    const g = 10;
+  applyGravity = function (other){
+    const g = 1.2;
     const dist = this.getDistance(other);
     const dir = this.getDir(other);
 
     // F = g*((m1*m2)/(d*d))
     var F = g*(this.size * planet.size )/(dist*dist);
 
-    console.log(dist, dir, F);
+    //console.log(dist, dir, F);
 
-    this.direction.x += dir.x*(F);
-    this.direction.y += dir.y*(F);
-
+    other.direction.x += dir.x*(-F);
+    other.direction.y += dir.y*(-F);
   }
+
+  detectCollison = function(other){
+    let edges = this.getDistance(other) - .5*this.size - .5*other.size;
+    if (edges < 0){
+      console.log("Collision Detected!");
+      this.combinePlanets(other);
+    }
+  }
+
+  combinePlanets = function(other){
+    let bigger = this.size > other.size? this:other;
+    let smaller = this.size <= other.size? this:other;
+
+    for(const mat in smaller.materials){
+      //console.log(mat,":",smaller.materials[mat])
+      // add all materials to larger planet and resize
+      bigger.materials[mat]+=smaller.materials[mat]
+    }
+      bigger.size = bigger.getSize();
+
+      // recalculate direction of larger planet
+
+      // V1*M1 - V2*M2 = VF*MT
+      // VF = (V1*M1 - V2*M2)/MT
+      let dif = bigger.size/(bigger.size + smaller.size);
+      console.log(dif);
+      bigger.direction.x = .7*(bigger.direction.x *dif )+(smaller.direction.x *(1-dif));
+      bigger.direction.y = .7*(bigger.direction.y *dif )+(smaller.direction.y *(1-dif));
+
+      //move the smaller one to the point where it will disapear
+      smaller.pos.x=500000;
+  }
+
 
 
   draw = function(){

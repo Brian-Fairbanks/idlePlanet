@@ -12,6 +12,8 @@ var ctx = canvas.getContext("2d");
 planets.push(new Planet({name:"Mars", type:"Planet"}));
 planets.push(new Planet({name:"Jupitor", type:"Planet"}));
 planets.push(new Planet({name:"Saturn", type:"Planet"}));
+planets.push(new Planet({name:"Pluto", type:"Planet"}));
+planets.push(new Planet({name:"Uranus", type:"Planet"}));
 
 
 
@@ -37,6 +39,8 @@ function draw(){
 // TODO: update as fast as possible, but only draw 60 times/second
 function update(){
 
+  detectColisions();
+
   for(planet of planets){
     planet.move();
   }
@@ -48,7 +52,16 @@ function update(){
   draw();
 }
 
-
+// Collision detections for planets
+function detectColisions(){
+  for (planet of planets){
+    for (other of planets){
+      if (planet != other){
+        planet.detectCollison(other)
+      }
+    }
+  }
+}
 
 //Gravity Function
 function applyGravity(){
@@ -56,7 +69,7 @@ function applyGravity(){
   for (planet of planets){
     for (other of planets){
       if (planet != other){
-        console.log(`Applying Gravity on ${planet.name} -> ${other.name}`);
+        //console.log(`Applying Gravity on ${planet.name} -> ${other.name}`);
         planet.applyGravity(other);
         // G = g*((m1*m2)/(d*d))
 
