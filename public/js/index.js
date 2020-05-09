@@ -6,7 +6,7 @@ var y = 0;
 const maxPlanets = 20;
 const maxDistance = 100000;
 //Gravitational Constant
-const g = .000002;
+const g = .0000005;
 
 //const homePlanet = newPlanet("Home");
 planets.push(new Planet({name:"Earth", speed:0, posx:0, posy:0, dirx:0, diry:0, type:"Start"}));
@@ -93,5 +93,5 @@ document.addEventListener("wheel", function (e) {
   draw();
 });
 
-const timer = setInterval(update, 10);
+const timer = setInterval(update, 20);
 resizeCanvas();

@@ -34,7 +34,7 @@ class Planet {
 
   makeComposition = function (){
     for (const mat of materials){
-      let curPercent = Math.random()*100000;
+      let curPercent = Math.random()*1000000;
       this.materials[mat] = curPercent;
     }
   }
@@ -60,7 +60,6 @@ class Planet {
     // 3root 6piV = d
 
     let size = Math.cbrt(6*Math.PI*this.mass)
-
     return size;
   }
 
@@ -119,6 +118,7 @@ class Planet {
       bigger.materials[mat]+=smaller.materials[mat]
     }
       bigger.mass = bigger.getMass();
+      bigger.size = bigger.getSize();
 
       // recalculate direction of larger planet
 
