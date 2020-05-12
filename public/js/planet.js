@@ -26,8 +26,8 @@ class Planet {
     //this.speed=("speed" in props)?props.speed:Math.random()*50;
     this.speed = 1;
     this.direction = {
-      x: "dirx" in props?props.dirx:10*Math.random()*2-1,
-      y: "diry" in props?props.diry:10*Math.random()*2-1
+      x: "dirx" in props?props.dirx:maxSpeed*(Math.random()*2-1),
+      y: "diry" in props?props.diry:maxSpeed*(Math.random()*2-1)
     };
     this.distFromOrigin = Math.sqrt(this.pos.x^2 + this.pos.y^2);
   }
